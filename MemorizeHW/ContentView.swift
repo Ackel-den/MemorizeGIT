@@ -13,14 +13,14 @@ struct ContentView: View {
     
     var body: some View {
         HStack{
-            NameOfTheme(name: viewModel.nameOfTheme)
-            Score(score: viewModel.model.score)
+            infShape(name: viewModel.model.theme.nameOfTheme, number: nil)
+            infShape(name: nil, number: viewModel.model.score)
         }
         Spacer()
         ScrollView{
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]){
                 ForEach(viewModel.cards){card in
-                    CardView(card: card, color: viewModel.colorOfTheme)
+                    CardView(card: card, color: viewModel.model.theme.colorForPrint)
                         .aspectRatio(2/3, contentMode: .fit)
                         .onTapGesture {
                             viewModel.choose(card)
@@ -29,36 +29,28 @@ struct ContentView: View {
             }
             .padding(.all)
         }
-        NewGameButton(color: viewModel.colorOfTheme)
+        NewGameButton(color: viewModel.model.theme.colorForPrint)
                 .onTapGesture {
                     viewModel.startNewGame()
                 }
     }
 }
 
-struct Score: View {
-    var score: Int
-    var body: some View{
+struct infShape: View {
+    let name: String?
+    let number: Int?
+    var body: some View {
         ZStack{
-            let shape = RoundedRectangle(cornerRadius: 50)
-            shape.strokeBorder(lineWidth: 3)
-                .frame(width: 120, height: 60)
-            Text("Score: \(score)")
-                .font(.title)
-        }
-    }
-}
-
-struct NameOfTheme: View{
-    let name: String
-    
-    var body: some View{
-        ZStack{
-            let shape = RoundedRectangle(cornerRadius: 50)
-            shape.strokeBorder(lineWidth: 3)
-                .frame(width: 190, height: 60)
-            Text("Theme: \(name)")
-                .font(.title2)
+            RoundedRectangle(cornerRadius: 50)
+                .strokeBorder(lineWidth: 3)
+                .frame(width: 160, height: 60)
+            if number != nil {
+                Text("Score: \(number!)")
+            }
+            else {
+                Text("Theme: \(name!)")
+            }
+            
         }
     }
 }
@@ -67,11 +59,10 @@ struct NewGameButton: View {
     let color: Color
     var body: some View{
         ZStack{
-            let shape = RoundedRectangle(cornerRadius: 50)
-            shape.frame(width: 150.0, height: 50.0)
+            RoundedRectangle(cornerRadius: 50)
+                .strokeBorder(lineWidth: 3).foregroundColor(.black)
+                .frame(width: 180.0, height: 50.0)
                 .foregroundColor(.white)
-            shape.strokeBorder(lineWidth: 3)
-                 .frame(width: 150.0, height: 50.0)
             Text("New game")
                 .foregroundColor(.black)
                 .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)

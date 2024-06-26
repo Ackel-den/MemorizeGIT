@@ -5,15 +5,16 @@
 //
 
 import Foundation
+import SwiftUI
 
 
 struct MemoryGame <CardContent> where CardContent: Equatable {
     var cards: Array <Card>
     var score: Int
-    
+    var theme: Themes
     private var indexOfTheOneAndOnlyFaceUpCard: Int?
     
-    init(numberOfPairsCards: Int, createCardContent: (Int) -> CardContent) {
+    init(numberOfPairsCards: Int, _ theme: Themes, createCardContent: (Int) -> CardContent) {
         cards = Array<Card>()
         for pairIndex in 0..<numberOfPairsCards{
             let content = createCardContent(pairIndex)
@@ -22,6 +23,7 @@ struct MemoryGame <CardContent> where CardContent: Equatable {
         }
         cards.shuffle()
         score = 0
+        self.theme = theme
     }
     
     mutating func choose(_ card: Card){
@@ -51,9 +53,9 @@ struct MemoryGame <CardContent> where CardContent: Equatable {
     }
     
 struct Card: Identifiable{
-    var isFaceUp: Bool = false
-    var isMatched: Bool = false
-    var viewed: Bool = false
+    var isFaceUp = false
+    var isMatched = false
+    var viewed = false
     var content: CardContent
 
     var id: Int
@@ -63,10 +65,9 @@ struct Card: Identifiable{
 struct Themes{
     var emojisOfTheme: Array<String>
     var numberOfPairs: Int = Int.random(in: 3...10)
-    var colorForPrint: Colors?
-    var nameOfTheme: String = "Nothing"
+    var colorForPrint: Color
+    var nameOfTheme: String?
     
-    static let randomTheme = Int.random(in: 0...2)
     init (_ rand: Int){
         emojisOfTheme = Array<String>()
         switch rand{
@@ -83,16 +84,10 @@ struct Themes{
             nameOfTheme = "Vehicles"
             colorForPrint = .blue
         default:
+            colorForPrint = .black
             break
         }
         emojisOfTheme.shuffle()
     }
-    
-    enum Colors {
-        case red
-        case orange
-        case blue
-        case nothing
-    }
-    
+
 }
