@@ -13,7 +13,7 @@ struct CardView: View {
 
     var body: some View {
         ZStack{
-            let shape = RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+            let shape = RoundedRectangle(cornerRadius: 25.0)
             if card.isFaceUp{
                 shape.fill()
                 shape.foregroundColor(color)
