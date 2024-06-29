@@ -65,7 +65,7 @@ struct NewGameButton: View {
                 .foregroundColor(.white)
             Text("New game")
                 .foregroundColor(.black)
-                .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                .font(.title)
         }
     }
 }
