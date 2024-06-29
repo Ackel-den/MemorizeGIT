@@ -71,7 +71,6 @@ struct NewGameButton: View {
 }
 
 
-
 #Preview {
     let game = ViewModel()
     return ContentView(viewModel: game)
